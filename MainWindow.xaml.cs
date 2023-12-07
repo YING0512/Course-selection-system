@@ -20,9 +20,21 @@ namespace Course_selection_system
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Student> students = new List<Student>();
         public MainWindow()
         {
             InitializeComponent();
+
+            InitializeStudent();
+        }
+
+        private void InitializeStudent()
+        {
+            students.Add(new Student { StudentId = "A1234567", StudentName = "陳一" });
+            students.Add(new Student { StudentId = "A1234566", StudentName = "王二" });
+            students.Add(new Student { StudentId = "A1234555", StudentName = "林三" });
+
+            cmbStudent.ItemsSource = students;
         }
     }
 }
