@@ -21,6 +21,7 @@ namespace Course_selection_system
     public partial class MainWindow : Window
     {
         List<Student> students = new List<Student>();
+        Student selectedStudent = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,6 +36,12 @@ namespace Course_selection_system
             students.Add(new Student { StudentId = "A1234555", StudentName = "林三" });
 
             cmbStudent.ItemsSource = students;
+        }
+
+        private void cmbStudent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedStudent = (Student)cmbStudent.SelectedItem;
+            labelStatus.Content = $"選取學生:{selectedStudent.ToString()}";
         }
     }
 }
