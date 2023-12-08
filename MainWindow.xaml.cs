@@ -22,11 +22,100 @@ namespace Course_selection_system
     {
         List<Student> students = new List<Student>();
         Student selectedStudent = null;
+        List<Course> courses = new List<Course>();
+        List<Teacher> teachers = new List<Teacher>();
         public MainWindow()
         {
             InitializeComponent();
 
             InitializeStudent();
+
+            InitializeCourse();
+        }
+
+        private void InitializeCourse()
+        {
+            Teacher teacher1 = new Teacher() { TeacherName = "陳定宏" };
+            teacher1.TeachingCourses.Add(new Course(teacher1)
+            {
+                CourseName = "視窗程式設計",
+                OpeniingClass = "五專三甲",
+                Type = "必修",
+                Point = 3
+            });
+            teacher1.TeachingCourses.Add(new Course(teacher1)
+            {
+                CourseName = "視窗程式設計",
+                OpeniingClass = "四技二甲",
+                Type = "選修",
+                Point = 3
+            });
+            teacher1.TeachingCourses.Add(new Course(teacher1)
+            {
+                CourseName = "視窗程式設計",
+                OpeniingClass = "四技二乙",
+                Type = "選修",
+                Point = 3
+            });
+            teacher1.TeachingCourses.Add(new Course(teacher1)
+            {
+                CourseName = "視窗程式設計",
+                OpeniingClass = "四技二丙",
+                Type = "選修",
+                Point = 3
+            });
+
+            Teacher teacher2 = new Teacher() { TeacherName = "陳福坤" };
+            teacher2.TeachingCourses.Add(new Course(teacher2)
+            {
+                CourseName = "計算機概論",
+                OpeniingClass = "四技一丙",
+                Type = "必修",
+                Point = 2
+            });
+            teacher2.TeachingCourses.Add(new Course(teacher2)
+            {
+                CourseName = "計算機概論",
+                OpeniingClass = "四技一甲",
+                Type = "必修",
+                Point = 2
+            });
+            teacher2.TeachingCourses.Add(new Course(teacher2)
+            {
+                CourseName = "數位系統導論",
+                OpeniingClass = "四技一乙",
+                Type = "必修",
+                Point = 2
+            });
+
+            Teacher teacher3 = new Teacher() { TeacherName = "許子衡" };
+            teacher3.TeachingCourses.Add(new Course(teacher3)
+            {
+                CourseName = "Android程式設計",
+                OpeniingClass = "四技資工三甲",
+                Type = "選修",
+                Point = 3
+            });
+            teacher3.TeachingCourses.Add(new Course(teacher3)
+            {
+                CourseName = "人工智慧與雲端運算",
+                OpeniingClass = "四技資工四甲",
+                Type = "選修",
+                Point = 3
+            });
+            teacher3.TeachingCourses.Add(new Course(teacher3)
+            {
+                CourseName = "動態程式語言",
+                OpeniingClass = "五專資工三甲",
+                Type = "選修",
+                Point = 3
+            });
+
+            teachers.Add(teacher1);
+            teachers.Add(teacher2);
+            teachers.Add(teacher3);
+
+            tvTeacher.ItemsSource = teachers;
         }
 
         private void InitializeStudent()
