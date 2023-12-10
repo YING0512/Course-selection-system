@@ -22,8 +22,12 @@ namespace Course_selection_system
     {
         List<Student> students = new List<Student>();
         Student selectedStudent = null;
+
         List<Course> courses = new List<Course>();
+        Course selectedCourse = null;
+
         List<Teacher> teachers = new List<Teacher>();
+        Teacher selectedTeacher = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -116,6 +120,15 @@ namespace Course_selection_system
             teachers.Add(teacher3);
 
             tvTeacher.ItemsSource = teachers;
+
+            foreach (Teacher teacher in teachers)
+            {
+                foreach(Course course in teacher.TeachingCourses)
+                {
+                    courses.Add(course);
+                }
+                lbCourse.ItemsSource = courses;
+            }
         }
 
         private void InitializeStudent()
@@ -125,12 +138,27 @@ namespace Course_selection_system
             students.Add(new Student { StudentId = "A1234555", StudentName = "林三" });
 
             cmbStudent.ItemsSource = students;
+            cmbStudent.SelectedIndex = 0;
         }
 
         private void cmbStudent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedStudent = (Student)cmbStudent.SelectedItem;
             labelStatus.Content = $"選取學生:{selectedStudent.ToString()}";
+        }
+
+        private void tvTeacher_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if(tvTeacher.SelectedItem is Teacher)
+            {
+                selectedTeacher = (Teacher)tvTeacher.SelectedItem;
+                labelStatus.Content = $"選取教師:{selectedTeacher.ToString()}";
+            }
+            else if(tvTeacher.SelectedItem is Course)
+            {
+                selectedCourse = (Course)tvTeacher.SelectedItem;
+                labelStatus.Content = $"選取課程:{selectedCourse.ToString()}";
+            }
         }
     }
 }

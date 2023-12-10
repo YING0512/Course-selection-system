@@ -17,5 +17,10 @@ namespace Course_selection_system
         {
             Tutor = tutor;
         }
+
+        public override string ToString()
+        {
+            return $"選取課程:{CourseName}({Type}:{Point}學分)";
+        }
     }
 }
