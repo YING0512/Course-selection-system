@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Course_selection_system
 {
-    internal class Student
+    public class Student
     {
         public string StudentId { get; set; }
         public string StudentName { get; set; }
 
         public override string ToString()
         {
-            return $"{StudentId} {StudentName}";
+            return $"{StudentName} ({StudentId})";
         }
     }
+
 }

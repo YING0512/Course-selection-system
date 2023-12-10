@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,7 +42,7 @@ namespace Course_selection_system
         {
             InitializeComponent();
 
-            InitializeStudent();
+            //InitializeStudent();
 
             InitializeCourse();
         }
@@ -134,7 +140,7 @@ namespace Course_selection_system
                 lbCourse.ItemsSource = courses;
             }
         }
-
+        /*
         private void InitializeStudent()
         {
             students.Add(new Student { StudentId = "A1234567", StudentName = "陳一" });
@@ -144,12 +150,17 @@ namespace Course_selection_system
             cmbStudent.ItemsSource = students;
             cmbStudent.SelectedIndex = 0;
         }
-
+        */
         private void cmbStudent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedStudent = (Student)cmbStudent.SelectedItem;
-            labelStatus.Content = $"選取學生:{selectedStudent.ToString()}";
+            if (selectedStudent != null)
+            {
+                labelStatus.Content = $"選取學生: 學號-{selectedStudent.StudentId}，姓名-{selectedStudent.StudentName}";
+            }
         }
+
+
 
         private void tvTeacher_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -210,6 +221,54 @@ namespace Course_selection_system
                 records.Remove(selectedRecord);
                 lvRecord.ItemsSource=records ;
                 lvRecord.Items.Refresh();
+                MessageBox.Show($"{selectedStudent.StudentName} 已退選{selectedCourse.CourseName}");
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Json文件 (*.json)|*.json|All Files (*.*)|*.*";
+            saveFileDialog.Title = "儲存學生選課紀錄";
+
+            if(saveFileDialog.ShowDialog() == true)
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    WriteIndented = true
+                };
+
+                String jsonString = JsonSerializer.Serialize(records, options);
+                File.WriteAllText(saveFileDialog.FileName, jsonString);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Json文件 (*.json)|*.json|All Files (*.*)|*.*";
+                openFileDialog.Title = "選擇學生資料檔案";
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string jsonContent = File.ReadAllText(openFileDialog.FileName);
+                    List<Student> loadedStudents = JsonSerializer.Deserialize<List<Student>>(jsonContent);
+
+                    if (loadedStudents != null)
+                    {
+                        cmbStudent.ItemsSource = loadedStudents;
+                        cmbStudent.DisplayMemberPath = null; // 清除 DisplayMemberPath
+                        cmbStudent.SelectedIndex = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"讀取學生資料時發生錯誤: {ex.Message}");
             }
         }
     }

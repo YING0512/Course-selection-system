@@ -18,10 +18,16 @@
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="500"/>
         </Grid.ColumnDefinitions>
-        
+        <!--舊版
         <StackPanel Orientation="Horizontal" Background="#FFFFE7E7" Grid.ColumnSpan="3">
             <Label Content="學生" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="99,0,0,0"/>
             <ComboBox x:Name="cmbStudent" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" SelectionChanged="cmbStudent_SelectionChanged"/>
+        </StackPanel>
+        -->
+        <StackPanel Orientation="Horizontal" Background="#FFFFE7E7" Grid.ColumnSpan="3">
+            <Button Content="選擇學生檔案" Click="Button_Click" Width="80" Height="30" Margin="20,0,20,0"/>
+            <Label Content="學生" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0"/>
+            <ComboBox x:Name="cmbStudent" Width="200" VerticalAlignment="Center" HorizontalAlignment="Left" SelectionChanged="cmbStudent_SelectionChanged"/>
         </StackPanel>
         
         <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
@@ -87,7 +93,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
             <Button x:Name="btnRegister" Content="選課" Width="80" Height="50" Margin="0,100,0,0" FontSize="16" FontWeight="Bold" Click="btnRegister_Click"/>
             <Button x:Name="btnWithdrawl" Content="退選" Width="80" Height="50" Margin="0,20,0,0" FontSize="16" FontWeight="Bold" Click="btnWithdrawl_Click"/>
-            <Button x:Name="btnSave" Content="儲存紀錄" Width="80" Height="50" Margin="0,20,0,0" FontSize="16" FontWeight="Bold"/>
+            <Button x:Name="btnSave" Content="儲存紀錄" Width="80" Height="50" Margin="0,20,0,0" FontSize="16" FontWeight="Bold" Click="btnSave_Click"/>
         </StackPanel>
         <ListView x:Name="lvRecord" ItemsSource="{Binding records}" Grid.Row="1" Grid.Column="2" Background="#FFF9E9FF" SelectionChanged="lvRecord_SelectionChanged">
             <ListView.View>
