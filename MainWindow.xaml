@@ -61,7 +61,7 @@
             </TabItem>
             
             <TabItem Header="所有課程">
-                <ListBox x:Name="lbCourse" Background="#FFE6FFFF">
+                <ListBox x:Name="lbCourse" Background="#FFE6FFFF" SelectionChanged="lbCourse_SelectionChanged">
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:Course}">
                             <StackPanel>
@@ -75,7 +75,7 @@
                                     <TextBlock Text=" => "/>
                                     <TextBlock Text="{Binding Type}"/>
                                     <TextBlock Text=" | "/>
-                                    <TextBlock Text="{Binding OpeniingClass}"/>
+                                    <TextBlock Text="{Binding OpeningClass}"/>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
@@ -85,10 +85,21 @@
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <Button x:Name="btnRegister" Content="選課" Width="80" Height="50" Margin="0,100,0,0" FontSize="16" FontWeight="Bold"/>
-            <Button x:Name="btnWithdrawl" Content="退選" Width="80" Height="50" Margin="0,20,0,0" FontSize="16" FontWeight="Bold"/>
+            <Button x:Name="btnRegister" Content="選課" Width="80" Height="50" Margin="0,100,0,0" FontSize="16" FontWeight="Bold" Click="btnRegister_Click"/>
+            <Button x:Name="btnWithdrawl" Content="退選" Width="80" Height="50" Margin="0,20,0,0" FontSize="16" FontWeight="Bold" Click="btnWithdrawl_Click"/>
             <Button x:Name="btnSave" Content="儲存紀錄" Width="80" Height="50" Margin="0,20,0,0" FontSize="16" FontWeight="Bold"/>
         </StackPanel>
-        <ListView Grid.Row="1" Grid.Column="2" Background="#FFF9E9FF"/>
+        <ListView x:Name="lvRecord" ItemsSource="{Binding records}" Grid.Row="1" Grid.Column="2" Background="#FFF9E9FF" SelectionChanged="lvRecord_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="學號" DisplayMemberBinding="{Binding SelectedStudent.StudentId}" />
+                    <GridViewColumn Header="學號" DisplayMemberBinding="{Binding SelectedStudent.StudentName}" />
+                    <GridViewColumn Header="課程名稱" DisplayMemberBinding="{Binding SelectedCourse.CourseName}"/>
+                    <GridViewColumn Header="學分" DisplayMemberBinding="{Binding SelectedCourse.Point}"/>
+                    <GridViewColumn Header="類別" DisplayMemberBinding="{Binding SelectedCourse.Type}"/>
+                    <GridViewColumn Header="開課班級" DisplayMemberBinding="{Binding SelectedCourse.OpeningClass}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,9 @@ namespace Course_selection_system
 
         List<Teacher> teachers = new List<Teacher>();
         Teacher selectedTeacher = null;
+
+        List<Record> records = new List<Record>();
+        Record selectedRecord = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -43,28 +47,28 @@ namespace Course_selection_system
             teacher1.TeachingCourses.Add(new Course(teacher1)
             {
                 CourseName = "視窗程式設計",
-                OpeniingClass = "五專三甲",
+                OpeningClass = "五專三甲",
                 Type = "必修",
                 Point = 3
             });
             teacher1.TeachingCourses.Add(new Course(teacher1)
             {
                 CourseName = "視窗程式設計",
-                OpeniingClass = "四技二甲",
+                OpeningClass = "四技二甲",
                 Type = "選修",
                 Point = 3
             });
             teacher1.TeachingCourses.Add(new Course(teacher1)
             {
                 CourseName = "視窗程式設計",
-                OpeniingClass = "四技二乙",
+                OpeningClass = "四技二乙",
                 Type = "選修",
                 Point = 3
             });
             teacher1.TeachingCourses.Add(new Course(teacher1)
             {
                 CourseName = "視窗程式設計",
-                OpeniingClass = "四技二丙",
+                OpeningClass = "四技二丙",
                 Type = "選修",
                 Point = 3
             });
@@ -73,21 +77,21 @@ namespace Course_selection_system
             teacher2.TeachingCourses.Add(new Course(teacher2)
             {
                 CourseName = "計算機概論",
-                OpeniingClass = "四技一丙",
+                OpeningClass = "四技一丙",
                 Type = "必修",
                 Point = 2
             });
             teacher2.TeachingCourses.Add(new Course(teacher2)
             {
                 CourseName = "計算機概論",
-                OpeniingClass = "四技一甲",
+                OpeningClass = "四技一甲",
                 Type = "必修",
                 Point = 2
             });
             teacher2.TeachingCourses.Add(new Course(teacher2)
             {
                 CourseName = "數位系統導論",
-                OpeniingClass = "四技一乙",
+                OpeningClass = "四技一乙",
                 Type = "必修",
                 Point = 2
             });
@@ -96,21 +100,21 @@ namespace Course_selection_system
             teacher3.TeachingCourses.Add(new Course(teacher3)
             {
                 CourseName = "Android程式設計",
-                OpeniingClass = "四技資工三甲",
+                OpeningClass = "四技資工三甲",
                 Type = "選修",
                 Point = 3
             });
             teacher3.TeachingCourses.Add(new Course(teacher3)
             {
                 CourseName = "人工智慧與雲端運算",
-                OpeniingClass = "四技資工四甲",
+                OpeningClass = "四技資工四甲",
                 Type = "選修",
                 Point = 3
             });
             teacher3.TeachingCourses.Add(new Course(teacher3)
             {
                 CourseName = "動態程式語言",
-                OpeniingClass = "五專資工三甲",
+                OpeningClass = "五專資工三甲",
                 Type = "選修",
                 Point = 3
             });
@@ -158,6 +162,54 @@ namespace Course_selection_system
             {
                 selectedCourse = (Course)tvTeacher.SelectedItem;
                 labelStatus.Content = $"選取課程:{selectedCourse.ToString()}";
+            }
+        }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedStudent == null || selectedCourse == null)
+            {
+                MessageBox.Show("請選取學生或課程");
+                return;
+            }
+            else
+            {
+                Record newRecord = new Record() { SelectedStudent = selectedStudent, SelectedCourse = selectedCourse };
+
+                foreach(Record r in records)
+                {
+                    if (r.Equals(newRecord))
+                    {
+                        MessageBox.Show($"{selectedStudent.StudentName} 已選取 {selectedCourse.CourseName}");
+                        return;
+                    }
+                }
+
+                records.Add(newRecord);
+                lvRecord.ItemsSource = records ;
+                lvRecord.Items.Refresh();
+            }
+        }
+
+        private void lbCourse_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedCourse = (Course)tvTeacher.SelectedItem;
+            labelStatus.Content = $"選取課程:{selectedCourse.ToString()}";
+        }
+
+        private void lvRecord_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedRecord = (Record)lvRecord.SelectedItem;
+            if(selectedRecord != null) labelStatus.Content = selectedRecord.ToString();
+        }
+
+        private void btnWithdrawl_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedRecord != null)
+            {
+                records.Remove(selectedRecord);
+                lvRecord.ItemsSource=records ;
+                lvRecord.Items.Refresh();
             }
         }
     }

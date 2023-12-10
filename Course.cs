@@ -11,7 +11,7 @@ namespace Course_selection_system
         public string CourseName { get; set; }
         public string Type { get; set; }
         public int Point { get; set; }
-        public string OpeniingClass { get; set; }
+        public string OpeningClass { get; set; }
         Teacher Tutor { get; set; }
         public Course(Teacher tutor)
         {
